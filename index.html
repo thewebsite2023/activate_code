@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu thí sinh | FLIO</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* CSS cho form tra cứu */
+        .search-container {
+            width: 600px;
+            margin: 70px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        h2 {
+            text-align:center ;
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .search-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #007bff;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h2>Lâys mã kích hoạt điện thoại</h2>
+        <input type="text" id="name" placeholder="Nhập tên thiết bị (VD: Galaxy J7 Pro)" required>
+        <button onclick="search()">Tra cứu</button>
+        <div id="result" class="result"></div>
+        <h1 id="error" class="error"></h1>
+    </div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld3hZApAAAAAKSFYbodtnVHsDp3RUiDoQESPuh-"></script>
+			   <script>
+      function onClick(e) {
+        e.preventDefault();
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6Ld3hZApAAAAAKSFYbodtnVHsDp3RUiDoQESPuh-', {action: 'submit'}).then(function(token) {
+              // Add your logic to submit to your backend server here.
+          });
+        });
+      }
+  </script>
+    <script>
+        // Danh sách thí sinh mẫu với định dạng ngày dd/mm/yyyy
+        const candidates = [
+          {name:Galaxy J7 Pro; activatecode:15112015 ;}
+        ];
+
+        // Hàm chuyển đổi định dạng ngày từ yyyy-mm-dd sang dd/mm/yyyy
+        function formatDate(dateString) {
+            const dateParts = dateString.split("-");
+            return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+        }
+
+        // Hàm tra cứu thí sinh
+        function search() {
+            const nameInput = document.getElementById('name').value.trim().toLowerCase();
+            const dobInput = document.getElementById('dob').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+
+            // Reset lại thông báo lỗi và kết quả
+            resultDiv.textContent = '';
+            errorDiv.textContent = '';
+
+            // Kiểm tra nếu người dùng chưa nhập đầy đủ thông tin
+            if (!nameInput || !dobInput) {
+                errorDiv.textContent = 'Vui lòng nhập đầy đủ tên và ngày sinh!';
+                return;
+            }
+
+            // Chuyển định dạng ngày từ yyyy-mm-dd sang dd/mm/yyyy
+            const formattedDob = formatDate(dobInput);
+
+            // Tìm kiếm thí sinh dựa vào tên và ngày sinh
+            const candidate = candidates.find(candidate =>
+                candidate.name.toLowerCase() === nameInput && candidate.dob === formattedDob
+            );
+
+            // Hiển thị kết quả nếu tìm thấy thí sinh
+            if (candidate) {
+                resultDiv.innerHTML = `
+                <strong>Tên thiết bị:</strong> ${candidate.name}<br>
+                <strong>Mã kích hoạt của bạn là:</strong> ${candidate.activatecode}<br>
+                `;
+            } else {
+                errorDiv.textContent = 'Không tìm thấy thí sinh hoặc sai thông tin!';
+            }
+        }
+    </script>
+	<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/670a05702480f5b4f58c6b49/1i9viagpj';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>
